@@ -15,6 +15,7 @@ public class TestServiceTirageMot {
 
     private static final int NB_MAX_MOTS = 3 ;
     private static final int MOT_NB = 2 ;
+    private static final String MOT_ATTENDU = "SUPER";
     @Mock
     private MotsRepository repository;
 
@@ -24,7 +25,7 @@ public class TestServiceTirageMot {
     @BeforeEach
     void beforeEachTest() {
         when(repository.nbMaxMots()).thenReturn(NB_MAX_MOTS);
-        when(repository.getMotByIndex(MOT_NB)).thenReturn("SUPER");
+        when(repository.getMotByIndex(MOT_NB)).thenReturn(MOT_ATTENDU);
     }
 
     @Test
@@ -33,6 +34,6 @@ public class TestServiceTirageMot {
         when(serviceNombreAleatoire.next(NB_MAX_MOTS)).thenReturn(MOT_NB);
         var selection = new ServiceTirageMot(repository, serviceNombreAleatoire);
         String tirage = selection.tirageMotAleatoire();
-        assertThat(tirage).isEqualTo("SUPER");
+        assertThat(tirage).isEqualTo(MOT_ATTENDU);
     }
 }
