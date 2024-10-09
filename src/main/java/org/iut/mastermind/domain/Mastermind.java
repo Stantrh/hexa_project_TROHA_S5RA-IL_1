@@ -28,8 +28,7 @@ public class Mastermind {
         if(this.isJeuEnCours(partieEnregistree))
             return false;
 
-        String mot = this.serviceTirageMot.tirageMotAleatoire();
-        Partie nouvellePartie = Partie.create(joueur, mot);
+        Partie nouvellePartie = Partie.create(joueur, this.serviceTirageMot.tirageMotAleatoire());
         this.partieRepository.create(nouvellePartie);
         return true;
     }
@@ -62,8 +61,8 @@ public class Mastermind {
     // si la partie en cours est vide, on renvoie false
     // sinon, on évalue si la partie est terminée
     private boolean isJeuEnCours(Optional<Partie> partieEnCours) {
-        if(partieEnCours.isPresent() && !partieEnCours.get().isTerminee())
-            return true;
-        return false;
+        // vaut faux si pas de partie en cours ou qu'elle existe mais n'est pas terminée
+        // si elle existe et est n'est pas terminée, on renvoie true car elle est en cours
+        return partieEnCours.isPresent() && !partieEnCours.get().isTerminee();
     }
 }
