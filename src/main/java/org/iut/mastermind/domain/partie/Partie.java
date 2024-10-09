@@ -1,6 +1,5 @@
 package org.iut.mastermind.domain.partie;
 
-import org.iut.mastermind.domain.proposition.MotSecret;
 import org.iut.mastermind.domain.proposition.Reponse;
 
 public class Partie {
@@ -46,8 +45,8 @@ public class Partie {
     // si toutes les lettres sont correctement placées,
     // on a terminé la partie
     public Reponse tourDeJeu(String motPropose) {
-        var motSecret = new MotSecret(this.motADeviner);
-        var reponse = motSecret.compareProposition(motPropose);
+        Reponse reponse = new Reponse(this.motADeviner);
+        reponse.compare(motPropose);
 
         if(verifieNbEssais()){
             if(reponse.lettresToutesPlacees()){

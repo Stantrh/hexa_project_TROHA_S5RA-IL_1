@@ -1,5 +1,6 @@
 package org.iut.mastermind.domain.proposition;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -11,56 +12,56 @@ public class TestProposition {
     @Test
     @DisplayName("une lettre est incorrecte")
     public void casLettreIncorrecte() {
-        var mot = new MotSecret("S");
-        var reponse = mot.compareProposition("Z");
+        var motADeviner = "S";
+        var reponse = this.compareProposition("Z", motADeviner);
         assertResultat(reponse, INCORRECTE);
     }
 
     @Test
     @DisplayName("une lettre est placée")
     public void casLettrePlacee() {
-        var mot = new MotSecret("S");
-        var reponse = mot.compareProposition("S");
+        var motADeviner = "S";
+        var reponse = this.compareProposition("S", motADeviner);
         assertResultat(reponse, PLACEE);
     }
 
     @Test
     @DisplayName("une lettre est incorrecte, une non placée")
     public void casDeuxiemeLettreMalPlacee() {
-        var mot = new MotSecret("SO");
-        var reponse = mot.compareProposition("ZS");
+        var motADeviner = "SO";
+        var reponse = this.compareProposition("ZS", motADeviner);
         assertResultat(reponse,  INCORRECTE, NON_PLACEE);
     }
 
     @Test
     @DisplayName("une lettre est incorrecte, non placée, placée")
     public void casCombinaisons() {
-        var mot = new MotSecret("SOL");
-        var reponse = mot.compareProposition("ZSL");
+        var motADeviner = "SOL";
+        var reponse = this.compareProposition("ZSL", motADeviner);
         assertResultat(reponse,  INCORRECTE, NON_PLACEE, PLACEE);
     }
 
     @Test
     @DisplayName("toutes les lettres sont placées")
     void casToutesLettresPlacees() {
-        var mot = new MotSecret("SOLID");
-        var reponse = mot.compareProposition("SOLID");
+        var motADeviner = "SOLID";
+        var reponse = this.compareProposition("SOLID", motADeviner);
         assertThat(reponse.lettresToutesPlacees()).isTrue();
     }
 
     @Test
     @DisplayName("la proposition n'est pas correcte")
     void casLettresIncorrectes() {
-        var mot = new MotSecret("SOLID");
-        var reponse = mot.compareProposition("SOL*D");
+        var motAdeviner = "SOLID";
+        var reponse = this.compareProposition("SOL*D", motAdeviner);
         assertThat(reponse.lettresToutesPlacees()).isFalse();
     }
 
     @Test
     @DisplayName("vérifie la taille du résultat")
     void casAccesLettres() {
-        var mot = new MotSecret("SOLID");
-        var reponse = mot.compareProposition("SOL*D");
+        var motAdeviner = "SOLID";
+        var reponse = this.compareProposition("SOL*D", motAdeviner);
         assertThat(reponse.lettresResultat()).hasSize(5);
     }
 
@@ -70,5 +71,12 @@ public class TestProposition {
             Lettre attendue = resultatAttendu[position];
             assertThat(reponse.lettre(position)).isEqualTo(attendue);
         }
+    }
+
+
+    private Reponse compareProposition(String essai, String motADeviner){
+        Reponse reponse = new Reponse(motADeviner);
+        reponse.compare(essai);
+        return reponse;
     }
 }
