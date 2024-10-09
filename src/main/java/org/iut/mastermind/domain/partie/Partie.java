@@ -48,7 +48,7 @@ public class Partie {
         Reponse reponse = new Reponse(this.motADeviner);
         reponse.compare(motPropose);
 
-        if(verifieNbEssais()){
+        if(nbEssais < NB_ESSAIS_MAX){
             if(reponse.lettresToutesPlacees()){
                 this.partieTerminee = true;
             }else{
@@ -61,10 +61,6 @@ public class Partie {
         return reponse;
     }
 
-    // vérifie que le nombre d'essais max n'est pas atteint
-    private boolean verifieNbEssais() {
-        return this.nbEssais < NB_ESSAIS_MAX;
-    }
 
     // la partie est-elle terminée
     public boolean isTerminee() {
