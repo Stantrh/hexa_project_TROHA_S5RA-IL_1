@@ -57,7 +57,7 @@ public class Partie {
         }
 
         if(this.nbEssais >= NB_ESSAIS_MAX)
-            done();
+            this.partieTerminee = true;
         return reponse;
     }
 
@@ -67,8 +67,4 @@ public class Partie {
         return this.partieTerminee;
     }
 
-    // la partie est terminée
-    void done() {
-        this.partieTerminee = true;
-    }
 }
